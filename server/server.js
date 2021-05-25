@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const pg = require('pg');
 const Pool = pg.Pool;
 const pool = new Pool ({
-    database: 'jazzy_sql',
+    database: 'jazzy_sql',//DB name
     host: 'localhost',
-    port: 5432,
+    port: 5432,//db PORT
 })
 
 pool.on('connect', () => {
@@ -61,8 +61,18 @@ app.listen(PORT, () => {
 // ];
 
 app.get('/artist', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(artistList);
+    console.log(`In /artist GET`);
+    const queryText = `SELECT * FROM "artist" ORDER BY "birthdate" DESC;`
+
+    pool.query(queryText)
+    .then( (result) => {
+        console.log(result.rows);
+        res.send(result.rows);
+    }).catch( (err) => {
+        console.log(err);
+        res.sendStatus(500);
+    })
+    //res.send(artistList);
 });
 
 app.post('/artist', (req, res) => {
