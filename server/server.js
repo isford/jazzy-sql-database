@@ -93,9 +93,24 @@ app.post('/artist', (req, res) => {
     //res.sendStatus(201);
 });
 
+// app.get('/song', (req, res) => {
+//     console.log(`In /songs GET`);
+//     res.send(songList);
+// });
+
 app.get('/song', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(songList);
+    console.log(`In /song GET`);
+    const queryText = `SELECT * FROM "song" ORDER BY "title" ASC;`
+
+    pool.query(queryText)
+    .then( (result) => {
+        console.log(result.rows);
+        res.send(result.rows);
+    }).catch( (err) => {
+        console.log(err);
+        res.sendStatus(500);
+    })
+    //res.send(artistList);
 });
 
 app.post('/song', (req, res) => {
