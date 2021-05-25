@@ -113,9 +113,27 @@ app.get('/song', (req, res) => {
     //res.send(artistList);
 });
 
+// app.post('/song', (req, res) => {
+//     songList.push(req.body);
+//     res.sendStatus(201);
+// });
+
 app.post('/song', (req, res) => {
-    songList.push(req.body);
-    res.sendStatus(201);
+    console.log('req.body',req.body);
+
+    let queryText = `INSERT INTO "song" ("title", "length", "released")
+    VALUES ($1, $2, $3);`
+
+    let values = [req.body.title, req.body.length, req.body.released]
+
+        pool.query(queryText, values)
+    .then( (result) => {
+        res.sendStatus(201);
+    }).catch( (err) => {
+        console.log(err);
+        res.sendStatus(500);
+    })
+    //res.sendStatus(201);
 });
 
 
