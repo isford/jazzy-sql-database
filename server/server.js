@@ -81,9 +81,9 @@ app.post('/artist', (req, res) => {
     let queryText = `INSERT INTO "artist"("name", "birthdate")
     VALUES ($1, $2);`
 
-    let values = [req.body.name, req.body.birthdate]
+    let values = [req.body.name, req.body.birthdate]//set values 
 
-        pool.query(queryText, values)
+        pool.query(queryText, values)//sanitizing
     .then( (result) => {
         res.sendStatus(201);
     }).catch( (err) => {
@@ -122,11 +122,11 @@ app.post('/song', (req, res) => {
     console.log('req.body',req.body);
 
     let queryText = `INSERT INTO "song" ("title", "length", "released")
-    VALUES ($1, $2, $3);`
+    VALUES ($1, $2, $3);`//SQL for DB
 
     let values = [req.body.title, req.body.length, req.body.released]
 
-        pool.query(queryText, values)
+        pool.query(queryText, values)//Sanitizing
     .then( (result) => {
         res.sendStatus(201);
     }).catch( (err) => {
